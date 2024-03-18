@@ -40,8 +40,6 @@ def run_signin_test(credentials):
         print("Test run failed:", e)
 
     finally:
-        # Add a small sleep
-        time.sleep(2)  # Sleep for 2 seconds
         driver.quit()
 
 # If script is run standalone
