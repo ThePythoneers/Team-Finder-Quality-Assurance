@@ -1,52 +1,36 @@
-from test import sign_up
-
-credentials = {
-    'username': "testuser",
-    'email': "test@example.com",
-    'password': "password123",
-    'organization_name': "TestOrg",
-    'hq_address': "123 Test St"
-}
+from testcases import invalid_passwords
 
 
 def test_invalid_passwords():
+    # List of invalid passwords to test sign-in with
     invalid_passwords = [
-        "passwordwith!specialchars",  # Contains special characters but no uppercase or numbers
-        "password_with_upper_and_numbers",  # No special characters
-        "password with spaces",  # Contains spaces
-        "invalid@password",  # Contains special characters but no uppercase or numbers
-        "pAssword12345",  # Uppercase not at beginning
-        "12345678Aa!",  # Numbers not at end
-        "PaSsWoRd!@#",  # All uppercase, lowercase, and special characters but no numbers
-        "passw0rd!",  # No uppercase letters
-        "PASSWORD!",  # No lowercase letters
-        "password12345",  # No special characters
-        "password_with_underscores",  # Contains underscores
-        "pass!1",  # Too short
-        "password_123",  # Contains underscore and numbers but no uppercase
-        "PASSWORD_123",  # Contains underscore and numbers but no lowercase
-        "P@SSWORD",  # No numbers
-        "!@#$%^&*",  # Only special characters
-        "password_with_tab	",  # Contains tab character
-        "PasswordWithNewline\n",  # Contains newline character
-        "PasswordWithCR\r",  # Contains carriage return character
-        "  password_with_leading_trailing_spaces  "  # Leading and trailing spaces
+        "short",
+        "no_uppercase",
+        "no_number",
+        "no_specialchar",
+        "onlylowercase123",
+        "ONLYUPPERCASE123",
+        "123456789012345678901234567890123456789012345678901"  # Too long
     ]
 
-    # Run registration test for each password
+    # Common credentials for sign-in
+    common_credentials = {
+        'email': 'miclaush@gmail.com'  # Email address to test
+    }
+
+    # Run sign-in test for each invalid password
     for password in invalid_passwords:
         # Assign password to credentials
+        credentials = common_credentials.copy()
         credentials['password'] = password
 
-        # Run signup test with current credentials
-        print(f"Testing registration with password: {password}")
-        sign_up.run_signup_test(credentials)
-
-# List of invalid passwords to test registration with
+        # Run sign-in test with current credentials
+        print(f"Testing sign-in with invalid password: {password}")
+        sign_in.run_signin_test(credentials)
 
 
 def test_invalid_emails():
-    # List of invalid email addresses to test registration with
+    # List of invalid emails to test sign-in with
     invalid_emails = [
         "invalid!email",
         "email$invalid",
@@ -57,25 +41,18 @@ def test_invalid_emails():
         "email123456789012345678901234567890123456789012345678901@example.com"  # Too long
     ]
 
-    # Common credentials for registration
-    common_credentials = {
-        'username': 'TestUsername',
-        'password': 'TestPassword122!',
-        'organization_name': 'TestOrg',
-        'hq_address': 'TestHQAddress'
-    }
-
-    # Run registration test for each invalid email
+    # Common password for sign-in
+    common_password = "Miclaush1@"
+    credentials = { "password": "Miclaush1@"}
+    # Run sign-in test for each invalid email
     for email in invalid_emails:
-        # Assign email to credentials
-        credentials = common_credentials.copy()
-        credentials['email'] = email
-
-        # Run signup test with current credentials
-        print(f"Testing registration with invalid email: {email}")
-        sign_up.run_signup_test(credentials)
+        # Run sign-in test with current email and common password
+        credentials["email"] = email
+        print(f"Testing sign-in with invalid email: {email}")
+        sign_in.run_signin_test(credentials)
 
 
 if __name__ == "__main__":
     #test_invalid_emails()
-    test_invalid_passwords()
+    #test_invalid_passwords()
+    invalid_passwords.test_invalid_passwords()

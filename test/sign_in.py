@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+
 def run_signin_test(credentials):
     # Initialize Chrome WebDriver
     driver = webdriver.Chrome()
@@ -34,6 +35,13 @@ def run_signin_test(credentials):
         # Create a directory for screenshots if it doesn't exist
         if not os.path.exists("screenshots"):
             os.makedirs("screenshots")
+        # Take screenshot after sign-in and save it in the screenshots folder
+        screenshot_dir = "screenshots"
+        os.makedirs(screenshot_dir, exist_ok=True)
+        screenshot_filename = f"signup_{credentials['email']}_{time.strftime('%Y%m%d_%H%M%S')}.png"
+        screenshot_path = os.path.join(screenshot_dir, screenshot_filename)
+        driver.save_screenshot(screenshot_path)
+        print(f"Screenshot saved at: {screenshot_path}")
 
 
     except Exception as e:
